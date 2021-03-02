@@ -10,6 +10,9 @@ const orderSchema = mongoose.Schema({
     deliveryAddress: { type: Array, default: [] },
     status: { type: String, required: true },
     paymentmethod: { type: String, required: true },
+    shippingCharges: { type: Number, required: true},
+    tax: { type: Number, required: true},
+    cartTotal: { type: Number, required: true}
 });
 
 

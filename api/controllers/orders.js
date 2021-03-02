@@ -5,7 +5,7 @@ const Product = require('../models/product');
 exports.getAllOrders = (req, res, next) => {
     Order
         .find()
-        .select('_id cart customer deliveryAddress status paymentmethod')
+        .select('_id cart customer deliveryAddress status paymentmethod shippingCharges tax cartTotal')
         .exec()
         .then(orders => {
             res.status(200).json({
@@ -27,7 +27,10 @@ exports.createOneOrder = (req, res, next) => {
         customer: req.body.customer,
         deliveryAddress: req.body.deliveryAddress,
         status: req.body.status,
-        paymentmethod: req.body.paymentmethod
+        paymentmethod: req.body.paymentmethod,
+        shippingCharges: req.body.shippingCharges, 
+        tax: req.body.tax, 
+        cartTotal: req.body.cartTotal
     })
     .save()
     .then(result => {
@@ -73,7 +76,7 @@ exports.getOneOrder = (req, res, next) => {
     const orderId = req.params.orderId;
     Order
         .findById(orderId)
-        .select('_id cart customer deliveryAddress status paymentmethod')
+        .select('_id cart customer deliveryAddress status paymentmethod shippingCharges tax cartTotal')
         .exec()
         .then(order => {
             return res.status(201).json(order);
@@ -123,6 +126,9 @@ function createOrder(req) {
         quantity: req.body.quantity,
         deliveryAddress: req.body.deliveryAddress,
         status: req.body.status,
-        paymentmethod: req.body.paymentmethod
+        paymentmethod: req.body.paymentmethod,
+        shippingCharges: req.body.shippingCharges, 
+        tax: req.body.tax, 
+        cartTotal: req.body.cartTotal
     });
 }
