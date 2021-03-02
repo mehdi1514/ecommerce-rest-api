@@ -26,19 +26,16 @@ exports.createOneOrder = (req, res, next) => {
         _id: mongoose.Types.ObjectId(),
         userId: req.body.userId,
         cart: req.body.cart,
-<<<<<<< HEAD
-        dateOrdered: currentTimeStamp,
-        expectedDelivery: currentTimeStamp + 3*24*60*60*1000, // adding 3 days to current timestamp
-        dateDelivered: currentTimeStamp - 1*24*60*60*1000, // subtracting 1 day from current timestamp,
-=======
         customer: req.body.customer,
         deliveryAddress: req.body.deliveryAddress,
         status: req.body.status,
         paymentmethod: req.body.paymentmethod,
         shippingCharges: req.body.shippingCharges, 
         tax: req.body.tax, 
-        cartTotal: req.body.cartTotal
->>>>>>> d70b236c2df5238be0404f44c7b2bc450bdcddec
+        cartTotal: req.body.cartTotal,
+        dateOrdered: currentTimeStamp,
+        expectedDelivery: currentTimeStamp + 3*24*60*60*1000, // adding 3 days to current timestamp
+        dateDelivered: currentTimeStamp - 1*24*60*60*1000
     })
     .save()
     .then(result => {
