@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const User = require('../models/user');
 
@@ -23,6 +24,12 @@ exports.signUp = (req, res, next) => {
                             email: req.body.email,
                             password: hash,
                             name: req.body.name,
+                            gender: req.body.gender,
+                            profilePicture: req.file.path,
+                            coupons: req.body.coupons,
+                            contactNo: req.body.contactNo,
+                            isAdmin: req.body.isAdmin,
+                            deliveryAddress: req.body.deliveryAddress
                         });
                         user
                             .save()
@@ -127,13 +134,13 @@ exports.getOneUser = (req, res, next) => {
     const userId = req.params.userId;
     User
         .findById(userId)
-        .select('_id email')
+        .select('_id email name gender isAdmin contactNo deliveryAddress profilePicture coupons')
         .exec()
         .then(result => {
             if(!result){
                 return res.status(404).json({
                     error: 'User not found',
-                }); 
+                });
             }
             return res.status(200).json({
                 user: result,
