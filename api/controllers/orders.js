@@ -5,7 +5,7 @@ const Product = require('../models/product');
 exports.getAllOrders = (req, res, next) => {
     Order
         .find()
-        .select('_id cart')
+        .select('_id cart dateOrdered expectedDelivery dateDelivered')
         .exec()
         .then(orders => {
             res.status(200).json({
@@ -19,10 +19,15 @@ exports.getAllOrders = (req, res, next) => {
 };
 
 exports.createOneOrder = (req, res, next) => {
+    var currentTimeStamp = Date.now();
+    console.log("Creating Order...")
     return new Order({
         _id: mongoose.Types.ObjectId(),
         userId: req.body.userId,
-        cart: req.body.cart
+        cart: req.body.cart,
+        dateOrdered: currentTimeStamp,
+        expectedDelivery: currentTimeStamp + 3*24*60*60*1000, // adding 3 days to current timestamp
+        dateDelivered: currentTimeStamp - 1*24*60*60*1000, // subtracting 1 day from current timestamp,
     })
     .save()
     .then(result => {
